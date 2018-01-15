@@ -24,3 +24,4 @@ nbdist/
 .nb-gradle/
 
 application-dev.properties
+mybatis-generator.xml
