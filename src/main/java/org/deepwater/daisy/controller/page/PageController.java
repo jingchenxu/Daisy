@@ -15,4 +15,9 @@ public class PageController {
     public String editor(){
         return "editor";
     }
+
+    @RequestMapping("/full")
+    public String full() {
+        return "full";
+    }
 }
