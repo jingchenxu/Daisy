@@ -1,5 +1,7 @@
 package org.deepwater.daisy.controller.page;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import org.deepwater.daisy.entity.blog.Blog;
 import org.deepwater.daisy.service.blog.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,12 @@ public class PageController {
     @RequestMapping("/")
     public String defaultdo(Map<String, Object> map) {
         map.put("name", "jingchenxu");
+        Blog blog = new Blog();
+        blog.setPageNo(1);
+        blog.setPageSize(9);
+        Page<Blog> blogs = blogService.getBlogListByPage(blog);
+        PageInfo<Blog> pageInfo = new PageInfo<>(blogs);
+        map.put("pageInfo", pageInfo);
         return "index";
     }
 
