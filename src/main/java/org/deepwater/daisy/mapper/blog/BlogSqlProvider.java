@@ -56,6 +56,10 @@ public class BlogSqlProvider {
             sql.VALUES("blog_subtitle", "#{blogSubtitle,jdbcType=VARCHAR}");
         }
         
+        if (record.getBlogNumber() != null) {
+            sql.VALUES("blog_number", "#{blogNumber,jdbcType=VARCHAR}");
+        }
+        
         if (record.getBlogContent() != null) {
             sql.VALUES("blog_content", "#{blogContent,jdbcType=LONGVARCHAR}");
         }
@@ -97,6 +101,10 @@ public class BlogSqlProvider {
         
         if (record.getBlogSubtitle() != null) {
             sql.SET("blog_subtitle = #{blogSubtitle,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getBlogNumber() != null) {
+            sql.SET("blog_number = #{blogNumber,jdbcType=VARCHAR}");
         }
         
         if (record.getBlogContent() != null) {

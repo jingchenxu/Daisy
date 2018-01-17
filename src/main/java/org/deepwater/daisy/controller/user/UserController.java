@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 public class UserController {
@@ -30,7 +32,10 @@ public class UserController {
             try {
                 if(currentUser.getUserPassword().equals(Tools.EncoderByMd5(password))){
                     request.getSession().setAttribute("currentuser", currentUser);
+                    Map data = new HashMap();
+                    data.put("url", "editor");
                     rtv.setSuccess(true);
+                    rtv.setData(data);
                     rtv.setMsg("请求成功");
                 } else {
                     rtv.setMsg("账户或密码错误");

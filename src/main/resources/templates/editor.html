@@ -24,11 +24,26 @@
                 <div id="test-editormd"></div>
             </div>
             <div class="col-sm-2">
-                <div style="width: 100%;height: 100px;background-color: red;"></div>
+                <form>
+                    <div class="form-group">
+                        <label for="InputTitle">标题</label>
+                        <input type="text" class="form-control" id="InputTitle" placeholder="请输入文章标题">
+                    </div>
+                    <div class="form-group">
+                        <label for="InputSubTitle">副标题</label>
+                        <input type="text" class="form-control" id="InputSubTitle" placeholder="请输入文章副标题">
+                    </div>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                        Launch demo modal
+                    </button>
+                    <button type="button" id="submit" class="btn btn-lg btn-primary btn-block">发布文章</button>
+                </form>
             </div>
         </main>
     </div>
 </div>
+<div th:include="components/tag"></div>
 <script src="editor/examples/js/jquery.min.js"></script>
 <script src="editor/editormd.js"></script>
 <script type="text/javascript">
@@ -39,8 +54,7 @@
         $.get('editor/examples/test.md', function(md){
             testEditor = editormd("test-editormd", {
                 width: "100%",
-                height: 700,
-                autoHeight      : true,
+                height: 740,
                 path : 'editor/lib/',
                 theme : "dark",
                 previewTheme : "dark",
@@ -142,7 +156,9 @@
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <!--<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>-->
-<!--<script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>-->
-<!--<script src="https://cdn.bootcss.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>-->
+<script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.bootcss.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+<script src="https://cdn.bootcss.com/axios/0.17.1/axios.min.js"></script>
+<script src="javeditor.js"></script>
 </body>
 </html>
