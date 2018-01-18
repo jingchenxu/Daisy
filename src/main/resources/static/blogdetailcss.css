@@ -2,14 +2,11 @@
  * Globals
  */
 @media (min-width: 48em) {
-    html {
-        font-size: 18px;
-    }
+
 }
 
 body {
-    font-family: Georgia, "Times New Roman", Times, serif;
-    color: #555;
+
 }
 
 h1,
@@ -24,9 +21,6 @@ h5,
 .h5,
 h6,
 .h6 {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-weight: 400;
-    color: #333;
 }
 
 /*

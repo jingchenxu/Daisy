@@ -1,10 +1,8 @@
 package org.deepwater.daisy.entity.blog;
 
-import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
-public class Blog implements Serializable {
+public class Blog {
     private Integer blogId;
 
     private String blogTitle;
@@ -26,12 +24,6 @@ public class Blog implements Serializable {
     private String blogNumber;
 
     private String blogContent;
-
-    private List<String> tags;
-
-    private int pageNo;
-
-    private int pageSize;
 
     public Integer getBlogId() {
         return blogId;
@@ -119,49 +111,5 @@ public class Blog implements Serializable {
 
     public void setBlogContent(String blogContent) {
         this.blogContent = blogContent == null ? null : blogContent.trim();
-    }
-
-    public List<String> getTags() {
-        return tags;
-    }
-
-    public void setTags(List<String> tags) {
-        this.tags = tags;
-    }
-
-    public int getPageNo() {
-        return pageNo;
-    }
-
-    public void setPageNo(int pageNo) {
-        this.pageNo = pageNo;
-    }
-
-    public int getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
-    }
-
-    @Override
-    public String toString() {
-        return "Blog{" +
-                "blogId=" + blogId +
-                ", blogTitle='" + blogTitle + '\'' +
-                ", blogAuthor='" + blogAuthor + '\'' +
-                ", blogPublishtime=" + blogPublishtime +
-                ", blogBannerurl='" + blogBannerurl + '\'' +
-                ", blogIntroduction='" + blogIntroduction + '\'' +
-                ", blogStatus='" + blogStatus + '\'' +
-                ", blogType='" + blogType + '\'' +
-                ", blogSubtitle='" + blogSubtitle + '\'' +
-                ", blogNumber='" + blogNumber + '\'' +
-                ", blogContent='" + blogContent + '\'' +
-                ", tags=" + tags +
-                ", pageNo=" + pageNo +
-                ", pageSize=" + pageSize +
-                '}';
     }
 }

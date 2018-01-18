@@ -59,5 +59,10 @@ public class PageController {
         return "blogDetail";
     }
 
+    @RequestMapping("/resume")
+    public String resume() {
+        return "resume";
+    }
+
 
 }
