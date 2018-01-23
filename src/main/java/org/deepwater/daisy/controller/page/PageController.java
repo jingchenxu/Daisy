@@ -46,6 +46,11 @@ public class PageController {
         return "editor";
     }
 
+    @RequestMapping("/blogList")
+    public String blogList() {
+        return "blogList";
+    }
+
     @RequestMapping("/full")
     public String full() {
         return "full";
