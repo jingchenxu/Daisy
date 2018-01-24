@@ -8,28 +8,25 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
     <link rel="stylesheet" href="blogdetailcss.css">
-    <link rel="stylesheet" href="solarized-dark.css">
     <title th:text="${blog.blogTitle}">博客详情</title>
 </head>
 <body style="">
 
-<header>
-    <div th:include="components/blogheader" class="blog-masthead">
-    </div>
-
-    <div class="blog-header">
-        <div class="container">
-            <h1 th:text="${blog.blogTitle}" class="blog-title">The Bootstrap Blog</h1>
-            <p th:text="${blog.blogSubtitle}" class="lead blog-description">An example blog template built with Bootstrap.</p>
-        </div>
-    </div>
+<header th:include="components/navibar">
 </header>
+
+<div class="blog-header">
+    <div class="container">
+        <h1 th:text="${blog.blogTitle}" class="blog-title">The Bootstrap Blog</h1>
+        <p th:text="${blog.blogSubtitle}" class="lead blog-description">An example blog template built with Bootstrap.</p>
+    </div>
+</div>
 
 <main role="main" class="container">
 
     <div class="row">
 
-        <div class="col-sm-8 blog-main">
+        <div class="col-12 col-md-9 blog-main">
 
             <div class="blog-post">
                 <div id="content"></div>
@@ -42,7 +39,7 @@
 
         </div><!-- /.blog-main -->
 
-        <aside class="col-sm-3 ml-sm-auto blog-sidebar">
+        <aside class="col-md-3 blog-sidebar">
             <div class="sidebar-module sidebar-module-inset">
                 <h4>About</h4>
                 <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
@@ -78,11 +75,7 @@
 
 </main><!-- /.container -->
 
-<footer class="blog-footer">
-    <p>Blog template built for <a href="https://getbootstrap.com/">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.</p>
-    <p>
-        <a href="#">Back to top</a>
-    </p>
+<footer th:include="components/blogfooter" class="blog-footer">
 </footer>
 
 <!-- Optional JavaScript -->

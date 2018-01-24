@@ -80,6 +80,7 @@ public interface BlogMapper {
     })
     Blog selectByBlogNumber(String blogNumber);
 
+    // 参考：http://blog.csdn.net/qq_32786873/article/details/78297551
     @Select({
             "select",
             "*",
