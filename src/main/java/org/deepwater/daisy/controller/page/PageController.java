@@ -46,9 +46,17 @@ public class PageController {
         return "editor";
     }
 
-    @RequestMapping("/blogList")
-    public String blogList() {
-        return "blogList";
+    @RequestMapping("/blogs")
+    public String blogList(Map<String, Object> map, String type, String tags, String keyword, Integer pageNo, Integer pageSize) {
+        System.out.println("博客类型:"+type);
+        Blog blog = new Blog();
+        blog.setPageNo(pageNo);
+        blog.setPageSize(9);
+        blog.setBlogType(type);
+        Page<Blog> blogs = blogService.getBlogListByPage(blog);
+        PageInfo<Blog> pageInfo = new PageInfo<>(blogs);
+        map.put("pageInfo", pageInfo);
+        return "blogs";
     }
 
     @RequestMapping("/full")

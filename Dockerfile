@@ -10,9 +10,10 @@ ENV MYSQL-ALLOW_EMPTY_PASSWORD yes
 
 # 初始化mysql 参考http://www.jb51.net/article/115422.htm
 COPY setup.sh /daisy/setup.sh
+COPY daisy.sh /daisy/daisy.sh
 COPY daisy.sql /daisy/daisy.sql
 COPY privileges.sql /daisy/privileges.sql
-CMD ["sh", "/daisy/setup.sh"]
+#CMD ["sh", "/daisy/setup.sh"]
 
 # 安装jdk环境
 ADD jdk-8u162-linux-x64.tar.gz /daisy/
@@ -24,4 +25,5 @@ EXPOSE 4000
 
 # 启动daisy
 ADD /daisy-0.0.1-SNAPSHOT.jar //
-ENTRYPOINT ["java", "-jar", "/daisy-0.0.1-SNAPSHOT.jar"]
+#ENTRYPOINT ["java", "-jar", "/daisy-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["sh", "/daisy/setup.sh"]
