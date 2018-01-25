@@ -7,6 +7,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Properties;
 import java.util.UUID;
 
 public class Tools {
@@ -51,9 +52,21 @@ public class Tools {
         return trString;
     }
 
+    public static boolean isOSLinux() {
+        Properties prop = System.getProperties();
+
+        String os = prop.getProperty("os.name");
+        if (os != null && os.toLowerCase().indexOf("linux") > -1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public static void main(String args[]) {
         try {
             System.out.println(EncoderByMd5("123456"));
+            System.out.println("===========os.name:"+isOSLinux());
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (UnsupportedEncodingException e) {

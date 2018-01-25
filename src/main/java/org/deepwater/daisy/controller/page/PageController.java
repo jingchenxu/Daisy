@@ -77,5 +77,10 @@ public class PageController {
         return "resume";
     }
 
+    @RequestMapping("/uploadDemo")
+    public String uploadDemo() {
+        return "uploaddemo";
+    }
+
 
 }

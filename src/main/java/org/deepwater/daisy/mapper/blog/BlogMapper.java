@@ -82,10 +82,15 @@ public interface BlogMapper {
 
     // 参考：http://blog.csdn.net/qq_32786873/article/details/78297551
     @Select({
-            "select",
-            "*",
-            "from T_DAISY_BLOG WHERE TRUE",
-            "ORDER BY blog_publishtime DESC"
+            "<script>",
+                    "select",
+                    "*",
+                    "from T_DAISY_BLOG WHERE TRUE",
+                    "<if test='blogType != null'>",
+                    "AND blog_type LIKE '%${blogType}%'",
+                    "</if>",
+                    "ORDER BY blog_publishtime DESC",
+                    "</script>"
     })
     @Results({
             @Result(column="blog_id", property="blogId", jdbcType=JdbcType.INTEGER, id=true),
