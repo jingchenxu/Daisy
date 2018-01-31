@@ -25,3 +25,12 @@ nbdist/
 
 application-dev.properties
 mybatis-generator.xml
+
+npm-debug.log
+node_modules
+.project
+.vscode
+.history
+.DS_Store
+\.settings/
+build/env.js
