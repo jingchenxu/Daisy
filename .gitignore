@@ -17,9 +17,7 @@ target/
 
 ### NetBeans ###
 nbproject/private/
-build/
 nbbuild/
-dist/
 nbdist/
 .nb-gradle/
 
@@ -33,4 +31,3 @@ node_modules
 .history
 .DS_Store
 \.settings/
-build/env.js
