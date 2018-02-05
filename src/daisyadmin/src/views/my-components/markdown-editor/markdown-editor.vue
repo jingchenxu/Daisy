@@ -10,7 +10,7 @@
             <Col span="16" offset="4">
                 <div class="markdown-con">
                     <Card>
-                        <textarea  id="iview_admin_markdown_editor" style="display:none;"></textarea>                
+                        <textarea  id="iview_admin_markdown_editor" style="display:none;"></textarea>
                     </Card>
                 </div>
             </Col>

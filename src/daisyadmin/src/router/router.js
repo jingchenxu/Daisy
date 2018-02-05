@@ -220,7 +220,8 @@ export const appRouter = [
         component: Main,
         children: [
             { path: 'bloglist', title: '博客列表', name: 'bloglist', icon: 'link', component: () => import('@/views/daisy/bloglist.vue') },
-            { path: 'blogadd', title: '博客添加', name: 'blogadd', icon: 'link', component: () => import('@/views/daisy/blogadd.vue') }
+            { path: 'blogadd', title: '博客添加', name: 'blogadd', icon: 'link', component: () => import('@/views/daisy/blogadd.vue') },
+            { path: 'imagemanager', title: '图片管理', name: 'imagemanager', icon: 'link', component: () => import('@/views/daisy/imagemanager.vue') }
         ]
     },
     {

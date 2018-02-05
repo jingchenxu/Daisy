@@ -19,18 +19,18 @@ module.exports = merge(webpackBaseConfig, {
         filename: '[name].js',
         chunkFilename: '[name].chunk.js'
     },
-    // devServer: {
-    //     historyApiFallback: true,
-    //     noInfo: true,
-    //     overlay: true,
-    //     proxy: {
-    //         '/admin/*': {
-    //             target: 'http://localhost:4000',
-    //             secure: false, //接受 运行在 https 上的服务
-    //             changeOrigin: true
-    //         }
-    //     }
-    // },
+    devServer: {
+        historyApiFallback: true,
+        noInfo: true,
+        overlay: true,
+        proxy: {
+            '/daisy/*': {
+                target: 'http://localhost:4000',
+                secure: false, //接受 运行在 https 上的服务
+                changeOrigin: true
+            }
+        }
+    },
     plugins: [
         new ExtractTextPlugin({
             filename: '[name].css',
