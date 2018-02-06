@@ -41,7 +41,7 @@ module.exports = merge(webpackBaseConfig, {
             minChunks: Infinity
         }),
         new HtmlWebpackPlugin({
-            title: 'iView admin v' + package.version,
+            title: 'daisy v' + package.version,
             filename: '../index.html',
             inject: false
         }),

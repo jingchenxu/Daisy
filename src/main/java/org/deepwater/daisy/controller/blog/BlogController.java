@@ -28,6 +28,20 @@ public class BlogController {
         return  blogService.saveBlog(blog);
     }
 
+    @RequestMapping("/getBlogList")
+    @ResponseBody
+    public ReturnValue getBlogList(Blog blog) {
+        ReturnValue rtv = new ReturnValue();
+        Page<Blog> blogs = blogService.getBlogListByPage(blog);
+        PageInfo<Blog> pageInfo = new PageInfo<>(blogs);
+        JSONObject data = new JSONObject();
+        data.put("pageInfo", pageInfo);
+        rtv.setSuccess(true);
+        rtv.setMsg("博客列表获取成功");
+        rtv.setData(data);
+        return rtv;
+    }
+
     @RequestMapping(value = "/getBlogListByPage", method = RequestMethod.GET)
     public ReturnValue getBlogListByPage() {
         ReturnValue rtv = new ReturnValue();

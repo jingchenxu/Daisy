@@ -89,6 +89,12 @@ public interface BlogMapper {
                     "<if test='blogType != null'>",
                     "AND blog_type LIKE '%${blogType}%'",
                     "</if>",
+                    "<if test='blogTitle != null'>",
+                    "AND blog_title LIKE '%${blogTitle}%'",
+                    "</if>",
+                    "<if test='blogStatus != null'>",
+                    "AND blog_status LIKE '%${blogStatus}%'",
+                    "</if>",
                     "ORDER BY blog_publishtime DESC",
                     "</script>"
     })

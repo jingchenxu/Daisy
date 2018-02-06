@@ -4,7 +4,7 @@
 <template>
     <div>
         <Row :gutter="10">
-            <Col span="16">
+            <Col :md="24" :lg="16">
             <Card :bordered="false">
                 <p slot="title">markdown编辑器</p>
                 <Form :model="blog" label-position="left" :label-width="100">
@@ -18,7 +18,7 @@
                 <textarea  id="iview_admin_markdown_editor" style="display:none;"></textarea>
             </Card>
             </Col>
-            <Col span="8">
+            <Col :md="24" :lg="8">
             <Card :bordered="false">
                 <p slot="title">
                     <Icon type="paper-airplane"></Icon>
