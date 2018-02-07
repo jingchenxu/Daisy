@@ -33,7 +33,9 @@ public class UserController {
                 if(currentUser.getUserPassword().equals(Tools.EncoderByMd5(password))){
                     request.getSession().setAttribute("currentuser", currentUser);
                     Map data = new HashMap();
-                    data.put("url", "editor");
+                    data.put("url", "home_index");
+                    data.put("avator", currentUser.getUserAvator());
+                    data.put("access", 1);
                     rtv.setSuccess(true);
                     rtv.setData(data);
                     rtv.setMsg("请求成功");

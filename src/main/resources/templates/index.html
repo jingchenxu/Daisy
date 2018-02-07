@@ -72,10 +72,14 @@
 
             <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-center">
-                    <li th:each="page, iterStat : ${pageInfo.navigatepageNums}" class="page-item disabled">
-                        <a th:if="${iterStat.last}" class="page-link" href="#" tabindex="-1">Previous</a>
-                        <a class="page-link" href="#" th:text="${iterStat.count}">1</a>
-                        <a th:if="${iterStat.last}" class="page-link" href="#">Next</a>
+                    <li class="page-item" th:class="${pageInfo.isFirstPage}? 'page-item disabled' : 'page-item'">
+                        <a th:href="@{'/blogs?pageNo='+${pageInfo.prePage}}" class="page-link">previous</a>
+                    </li>
+                    <li class="page-item" th:each="page, iterStat : ${pageInfo.navigatepageNums}">
+                        <a th:text="${iterStat.count}" th:href="@{'/blogs?pageNo='+${iterStat.count}}" class="page-link"></a>
+                    </li>
+                    <li class="page-item" th:class="${pageInfo.isLastPage}? 'page-item disabled' : 'page-item'">
+                        <a th:href="@{'/blogs?pageNo='+${pageInfo.nextPage}}" class="page-link">next</a>
                     </li>
                 </ul>
             </nav>
