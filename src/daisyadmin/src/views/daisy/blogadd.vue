@@ -9,13 +9,13 @@
                 <p slot="title">markdown编辑器</p>
                 <Form :model="blog" label-position="left" :label-width="100">
                     <FormItem label="博客标题">
-                        <Input v-model="blog.blogtitle"></Input>
+                        <Input v-model="blog.blogTitle"></Input>
                     </FormItem>
                     <FormItem label="博客概要">
                         <Input v-model="blog.blogIntroduction" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="Enter something..."></Input>
                     </FormItem>
                 </Form>
-                <textarea  id="iview_admin_markdown_editor" style="display:none;"></textarea>
+                <textarea id="iview_admin_markdown_editor" style="display:none;"></textarea>
             </Card>
             </Col>
             <Col :md="24" :lg="8">
@@ -23,17 +23,25 @@
                 <p slot="title">
                     <Icon type="paper-airplane"></Icon>
                     发布</p>
-                <p class="margin-top-10">
-                    <Icon type="android-time"></Icon>&nbsp;&nbsp;状&nbsp;&nbsp;&nbsp; 态：
-                    <Select size="small" style="width:90px" value="草稿">
-                        <Option v-for="item in articleStateList" :value="item.value" :key="item.value">{{ item.value }}</Option>
-                    </Select>
-                </p>
-                <Row class="margin-top-20 publish-button-con">
-                    <span class="publish-button"><Button @click="handlePreview">预览</Button></span>
-                    <span class="publish-button"><Button @click="handleSaveDraft">保存草稿</Button></span>
-                    <span class="publish-button"><Button @click="handlePublish" :loading="publishLoading" icon="ios-checkmark" style="width:90px;" type="primary">发布</Button></span>
-                </Row>
+                <Form ref="formCustom" :model="blog" :label-width="80">
+                    <FormItem label="博客状态" prop="blogstatus">
+                        <Select v-model="blog.blogStatus">
+                            <Option value="01">save</Option>
+                            <Option value="02">publish</Option>
+                        </Select>
+                    </FormItem>
+                    <FormItem label="博客类型" prop="blogtype">
+                        <Select v-model="blog.blogType">
+                            <Option value="01">技术</Option>
+                            <Option value="02">生活</Option>
+                            <Option value="03">小说</Option>
+                        </Select>
+                    </FormItem>
+                    <FormItem>
+                        <Button type="ghost" @click="saveblog" style="margin-left: 8px">预览</Button>
+                        <Button type="primary" @click="saveblog">保存</Button>
+                    </FormItem>
+                </Form>
             </Card>
             <div class="card-container">
                 <Card :bordered="false">
@@ -44,7 +52,7 @@
                     <Row>
                         <Col span="18">
                         <Select v-model="articleTagSelected" multiple @on-change="handleSelectTag" placeholder="请选择文章标签">
-                            <Option v-for="item in articleTagList" :value="item.value" :key="item.value">{{ item.value }}</Option>
+                            <Option v-for="item in articleTagList" :value="item.flagNumber" :key="item.flagId">{{ item.flagName }}</Option>
                         </Select>
                         </Col>
                         <Col span="6" class="padding-left-10">
@@ -103,6 +111,7 @@
 <script>
     import SimpleMDE from 'simplemde';
     import './simplemde.min.css';
+    import axios from 'axios';
     export default {
         name: 'blogadd',
         data () {
@@ -114,16 +123,31 @@
                 newTagName: '', // 新建标签名
                 articleStateList: [{value: '草稿'}, {value: '等待复审'}],
                 publishLoading: false,
-                modal1: true,
+                modal1: false,
+                simplemde: '',
                 blog: {
                     blogtitle: '',
-                    blogIntroduction: ''
+                    blogTitle: '',
+                    blogAuthor: '',
+                    blogPublishtime: '',
+                    blogBannerurl: '',
+                    blogIntroduction: '',
+                    blogStatus: '01',
+                    blogType: '01',
+                    blogSubtitle: '',
+                    blogNumber: '',
+                    blogContent: '',
+                    tags: [],
+                    pageNo: '',
+                    pageSize: ''
                 }
             };
         },
         mounted() {
-            new SimpleMDE({
+            let me = this;
+            let simplemde = new SimpleMDE({
                 autofocus: true,
+                forceSync: true,
                 autosave: {
                     enabled: true,
                     uniqueId: "MyUniqueID",
@@ -133,21 +157,18 @@
                 element: document.getElementById('iview_admin_markdown_editor'),
                 toolbar: ['bold', 'italic', 'strikethrough', 'heading', 'heading-smaller', 'heading-bigger', 'heading-1', 'heading-2', 'heading-3', '|', 'code', 'quote', 'unordered-list', 'clean-block', '|', 'link', 'image', 'table', 'horizontal-rule', '|', 'preview', 'guide']
             });
+            simplemde.codemirror.on("change", function(){
+                console.log(simplemde.value());
+                me.blog.blogContent = simplemde.value();
+                console.log(me.blog.blogContent);
+            });
+
+            // 页面加载完成后加载标签列表
+            this.getFlagList();
         },
         methods: {
             handleSelectTag () {
                 localStorage.tagsList = JSON.stringify(this.articleTagSelected); // 本地存储文章标签列表
-            },
-            createNewTag () {
-                if (this.newTagName.length !== 0) {
-                    this.articleTagList.push({value: this.newTagName});
-                    this.addingNewTag = false;
-                    setTimeout(() => {
-                        this.newTagName = '';
-                    }, 200);
-                } else {
-                    this.$Message.error('请输入标签名');
-                }
             },
             cancelCreateNewTag () {
                 this.newTagName = '';
@@ -157,12 +178,28 @@
                 this.addingNewTag = !this.addingNewTag;
             },
             createNewTag () {
+                var me = this;
                 if (this.newTagName.length !== 0) {
-                    this.articleTagList.push({value: this.newTagName});
+                    //this.articleTagList.push({flagName: this.newTagName});
                     this.addingNewTag = false;
-                    setTimeout(() => {
-                        this.newTagName = '';
-                    }, 200);
+                    // setTimeout(() => {
+                    //     this.newTagName = '';
+                    // }, 200);
+                    console.log("看看标签名称是什么"+this.newTagName);
+                    let flag = {
+                        flagId: null,
+                        flagNumber: null,
+                        flagName: this.newTagName,
+                        flagIcon: null
+                    };
+                    axios.post('/daisy/saveFlag', flag)
+                        .then(function (data) {
+                            data = data.data;
+                            if(data.success) {
+                                console.dir(data);
+                                me.getFlagList();
+                            }
+                        })
                 } else {
                     this.$Message.error('请输入标签名');
                 }
@@ -179,6 +216,7 @@
             },
             handlePublish () {
                 console.log('发布按钮被点击');
+                this.saveblog();
             },
             handleSuccess (res) {
                 console.dir(res);
@@ -189,6 +227,25 @@
             },
             cancel () {
 
+            },
+            saveblog () {
+                var me = this;
+                this.blog.tags = this.articleTagSelected;
+                axios.post('/daisy/saveBlog', this.blog)
+                    .then(function (data) {
+                        console.dir(data);
+                    })
+            },
+            getFlagList () {
+                var me = this;
+                axios.get('/daisy/selectFlagList')
+                    .then(function (data) {
+                        data = data.data;
+                        if(data.success) {
+                            console.dir(data);
+                            me.articleTagList = data.data;
+                        }
+                    })
             }
         }
     }

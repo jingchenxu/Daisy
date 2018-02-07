@@ -4,8 +4,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import org.deepwater.daisy.common.ReturnValue;
+import org.deepwater.daisy.common.Tools;
 import org.deepwater.daisy.entity.blog.Blog;
+import org.deepwater.daisy.entity.flag.Flag;
 import org.deepwater.daisy.service.blog.BlogService;
+import org.hibernate.loader.custom.Return;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -52,6 +55,33 @@ public class BlogController {
         PageInfo<Blog> pageInfo = new PageInfo<>(blogs);
         rtv.setSuccess(true);
         rtv.setData(pageInfo);
+        return rtv;
+    }
+
+    @RequestMapping("selectFlagList")
+    @ResponseBody
+    public ReturnValue selectFlagList(){
+        ReturnValue rtv = new ReturnValue();
+        rtv.setData(blogService.selectFlagList());
+        rtv.setSuccess(true);
+        rtv.setMsg("文章标签获取成功");
+        return rtv;
+    }
+
+    @RequestMapping(value="/saveFlag", method = RequestMethod.POST)
+    @ResponseBody
+    public ReturnValue saveFlag(@RequestBody Flag flag) {
+        System.out.println(flag);
+        ReturnValue rtv = new ReturnValue();
+        String flagNumber = Tools.CreateID("FL");
+        flag.setFlagNumber(flagNumber);
+        if(blogService.saveBlog(flag)==1){
+            rtv.setSuccess(true);
+            rtv.setData(flagNumber);
+            rtv.setMsg("标签保存成功");
+        } else {
+            rtv.setMsg("标签保存失败");
+        }
         return rtv;
     }
 

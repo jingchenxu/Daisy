@@ -16,7 +16,7 @@
             <property name="forceBigDecimals" value="false"/>
         </javaTypeResolver>
         <!--生成blogModel类存放位置-->
-        <javaModelGenerator targetPackage="org.deepwater.daisy.entity.blog" targetProject="src/main/java">
+        <javaModelGenerator targetPackage="org.deepwater.daisy.entity.flag" targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
@@ -35,14 +35,14 @@
                 type="MIXEDMAPPER",生成基于注解的Java Model 和相应的Mapper对象
                 type="XMLMAPPER",生成SQLMap XML文件和独立的Mapper接口
         -->
-        <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="org.deepwater.daisy.mapper.blog" targetProject="src/main/java">
+        <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="org.deepwater.daisy.mapper.flag" targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
         <!--<javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="org.deepwater.daisy.mapper.user" targetProject="src/main/java">-->
             <!--<property name="enableSubPackages" value="true"/>-->
         <!--</javaClientGenerator>-->
         <!--生成对应表及类名-->
-        <table tableName="T_DAISY_BLOG" domainObjectName="Blog" enableCountByExample="true" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="T_DAISY_BLOG_FLAG" domainObjectName="Flag" enableCountByExample="true" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
         <!--<table tableName="T_DAISY_USER" domainObjectName="User" enableCountByExample="true" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
     </context>
 </generatorConfiguration>

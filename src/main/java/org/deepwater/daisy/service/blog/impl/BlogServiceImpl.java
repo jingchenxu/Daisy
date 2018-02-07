@@ -5,11 +5,14 @@ import com.github.pagehelper.PageHelper;
 import org.deepwater.daisy.common.ReturnValue;
 import org.deepwater.daisy.common.Tools;
 import org.deepwater.daisy.entity.blog.Blog;
+import org.deepwater.daisy.entity.flag.Flag;
 import org.deepwater.daisy.mapper.blog.BlogMapper;
+import org.deepwater.daisy.mapper.flag.FlagMapper;
 import org.deepwater.daisy.service.blog.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -17,6 +20,9 @@ public class BlogServiceImpl implements BlogService {
 
     @Autowired
     private BlogMapper blogMapper;
+
+    @Autowired
+    private FlagMapper flagMapper;
 
     @Override
     public ReturnValue saveBlog(Blog blog) {
@@ -26,6 +32,7 @@ public class BlogServiceImpl implements BlogService {
             String blogNumber = Tools.CreateID("BL");
             blog.setBlogAuthor("jcxu");
             blog.setBlogNumber(blogNumber);
+            blog.setBlogPublishtime(new Date());
             int saveBlog = blogMapper.insert(blog);
             // 保存tag中间表
             List<String> tags = blog.getTags();
@@ -52,5 +59,15 @@ public class BlogServiceImpl implements BlogService {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public List<Flag> selectFlagList() {
+        return flagMapper.selectFlagList();
+    }
+
+    @Override
+    public int saveBlog(Flag flag) {
+        return flagMapper.insert(flag);
     }
 }

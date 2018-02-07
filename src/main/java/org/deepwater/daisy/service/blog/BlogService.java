@@ -3,6 +3,9 @@ package org.deepwater.daisy.service.blog;
 import com.github.pagehelper.Page;
 import org.deepwater.daisy.common.ReturnValue;
 import org.deepwater.daisy.entity.blog.Blog;
+import org.deepwater.daisy.entity.flag.Flag;
+
+import java.util.List;
 
 public interface BlogService {
 
@@ -11,4 +14,8 @@ public interface BlogService {
     public Blog getBlogDetail(String blogNumber);
 
     Page<Blog> getBlogListByPage(Blog blog);
+
+    List<Flag> selectFlagList();
+
+    public int saveBlog(Flag flag);
 }
