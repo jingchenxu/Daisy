@@ -56,6 +56,7 @@ public class PageController {
         Page<Blog> blogs = blogService.getBlogListByPage(blog);
         PageInfo<Blog> pageInfo = new PageInfo<>(blogs);
         map.put("pageInfo", pageInfo);
+        map.put("blogType", type);
         return "blogs";
     }
 
