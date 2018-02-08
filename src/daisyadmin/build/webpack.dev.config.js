@@ -20,8 +20,18 @@ module.exports = merge(webpackBaseConfig, {
         chunkFilename: '[name].chunk.js'
     },
     devServer: {
-        historyApiFallback: true,
-        noInfo: true,
+        historyApiFallback: {
+            contentBase: './',
+            watchContentBase: true,
+            //index: 'index.html',
+            rewrites: [
+                // shows views/landing.html as the landing page
+                // { from: /^\/$/, to: '../index.html' },
+                // shows views/subpage.html for all routes starting with /subpage
+                { from: /^\/daisyadmin/, to: 'index.html' },
+            ],
+        },
+        noInfo: false,
         overlay: true,
         proxy: {
             '/daisy/*': {

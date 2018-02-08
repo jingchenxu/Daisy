@@ -3,6 +3,7 @@ package org.deepwater.daisy.service.blog;
 import com.github.pagehelper.Page;
 import org.deepwater.daisy.common.ReturnValue;
 import org.deepwater.daisy.entity.blog.Blog;
+import org.deepwater.daisy.entity.blog.Image;
 import org.deepwater.daisy.entity.flag.Flag;
 
 import java.util.List;

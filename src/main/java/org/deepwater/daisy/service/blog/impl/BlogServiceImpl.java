@@ -5,13 +5,17 @@ import com.github.pagehelper.PageHelper;
 import org.deepwater.daisy.common.ReturnValue;
 import org.deepwater.daisy.common.Tools;
 import org.deepwater.daisy.entity.blog.Blog;
+import org.deepwater.daisy.entity.blog.BlogFlag;
+import org.deepwater.daisy.entity.blog.Image;
 import org.deepwater.daisy.entity.flag.Flag;
+import org.deepwater.daisy.mapper.blog.BlogFlagMapper;
 import org.deepwater.daisy.mapper.blog.BlogMapper;
 import org.deepwater.daisy.mapper.flag.FlagMapper;
 import org.deepwater.daisy.service.blog.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -23,6 +27,9 @@ public class BlogServiceImpl implements BlogService {
 
     @Autowired
     private FlagMapper flagMapper;
+
+    @Autowired
+    private BlogFlagMapper blogFlagMapper;
 
     @Override
     public ReturnValue saveBlog(Blog blog) {
@@ -36,6 +43,16 @@ public class BlogServiceImpl implements BlogService {
             int saveBlog = blogMapper.insert(blog);
             // 保存tag中间表
             List<String> tags = blog.getTags();
+            List<BlogFlag> blogFlags = new ArrayList<>();
+            for (String item: tags){
+                BlogFlag temp = new BlogFlag();
+                temp.setBlogflagBlogNumber(blogNumber);
+                temp.setBlogflagFlagNumber(item);
+                blogFlags.add(temp);
+            }
+            blogFlagMapper.insertAll(blogFlags);
+            System.out.println("==========");
+            System.out.println(tags);
             rtv.setSuccess(true);
             rtv.setMsg("保存成功");
         } catch ( Exception e) {
