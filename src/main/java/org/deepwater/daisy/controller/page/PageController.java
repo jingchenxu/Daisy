@@ -30,6 +30,8 @@ public class PageController {
         blog.setPageSize(9);
         Page<Blog> blogs = blogService.getBlogListByPage(blog);
         PageInfo<Blog> pageInfo = new PageInfo<>(blogs);
+        //System.out.println(blogService.getIndexImage());
+        map.put("indexImage", blogService.getIndexImage());
         map.put("pageInfo", pageInfo);
         return "index";
     }

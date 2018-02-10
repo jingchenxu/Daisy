@@ -10,6 +10,7 @@ import org.deepwater.daisy.entity.blog.Image;
 import org.deepwater.daisy.entity.flag.Flag;
 import org.deepwater.daisy.mapper.blog.BlogFlagMapper;
 import org.deepwater.daisy.mapper.blog.BlogMapper;
+import org.deepwater.daisy.mapper.blog.ImageMapper;
 import org.deepwater.daisy.mapper.flag.FlagMapper;
 import org.deepwater.daisy.service.blog.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,9 @@ public class BlogServiceImpl implements BlogService {
 
     @Autowired
     private BlogFlagMapper blogFlagMapper;
+
+    @Autowired
+    private ImageMapper imageMapper;
 
     @Override
     public ReturnValue saveBlog(Blog blog) {
@@ -86,5 +90,10 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public int saveBlog(Flag flag) {
         return flagMapper.insert(flag);
+    }
+
+    @Override
+    public List<Image> getIndexImage() {
+        return imageMapper.getIndexImage();
     }
 }

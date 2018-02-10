@@ -19,4 +19,6 @@ public interface BlogService {
     List<Flag> selectFlagList();
 
     public int saveBlog(Flag flag);
+
+    List<Image> getIndexImage();
 }
