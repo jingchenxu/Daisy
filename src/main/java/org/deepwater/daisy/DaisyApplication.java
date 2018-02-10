@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 
-// 暂时禁用了自动的安全配置 没搞懂什么情况
+// 暂时禁用了自动的安全配置 没搞懂什么情况 有待进一步的学习
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class })
 public class DaisyApplication {
 
