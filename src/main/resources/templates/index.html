@@ -29,7 +29,6 @@
                         <li data-target="#carouselExampleCaptions" data-slide-to="2" class="active"></li>
                     </ol>
                     <div class="carousel-inner">
-
                         <div th:each="item, iterStat : ${indexImage}" class="carousel-item" th:class="${iterStat.last}? 'carousel-item active' : 'carousel-item'">
                             <img class="d-block w-100" data-src="holder.js/800x400?auto=yes&amp;bg=555&amp;fg=333&amp;text=Third slide" alt="First slide [800x400]" th:src="${item.imageUrl}" data-holder-rendered="true">
                             <div class="carousel-caption d-none d-md-block">
@@ -37,8 +36,6 @@
                                 <p th:text="${item.imageDescription}">Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
                             </div>
                         </div>
-
-
                     </div>
                     <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>

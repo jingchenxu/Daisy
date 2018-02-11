@@ -83,6 +83,17 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
+    public Page<Image> getImageListByPage(Image image) {
+        try {
+            PageHelper.startPage(image.getPageNo(), image.getPageSize());
+            return imageMapper.getImageListByPage(image);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
     public List<Flag> selectFlagList() {
         return flagMapper.selectFlagList();
     }
@@ -95,5 +106,20 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public List<Image> getIndexImage() {
         return imageMapper.getIndexImage();
+    }
+
+    @Override
+    public int deleteImage(Integer imageId) {
+        return imageMapper.deleteByPrimaryKey(imageId);
+    }
+
+    @Override
+    public int addImage(Image image) {
+        return imageMapper.insert(image);
+    }
+
+    @Override
+    public int updateImage(Image image) {
+        return imageMapper.updateByPrimaryKey(image);
     }
 }

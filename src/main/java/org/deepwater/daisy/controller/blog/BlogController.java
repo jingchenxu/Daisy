@@ -6,6 +6,7 @@ import com.github.pagehelper.PageInfo;
 import org.deepwater.daisy.common.ReturnValue;
 import org.deepwater.daisy.common.Tools;
 import org.deepwater.daisy.entity.blog.Blog;
+import org.deepwater.daisy.entity.blog.Image;
 import org.deepwater.daisy.entity.flag.Flag;
 import org.deepwater.daisy.service.blog.BlogService;
 import org.hibernate.loader.custom.Return;
@@ -57,6 +58,62 @@ public class BlogController {
         rtv.setData(pageInfo);
         return rtv;
     }
+
+    @RequestMapping(value = "/getImageListByPage", method = RequestMethod.GET)
+    @ResponseBody
+    public ReturnValue getImageListByPage(Image image) {
+        ReturnValue rtv = new ReturnValue();
+        Page<Image> images = blogService.getImageListByPage(image);
+        PageInfo<Image> pageInfo = new PageInfo<>(images);
+        rtv.setSuccess(true);
+        rtv.setData(pageInfo);
+        rtv.setMsg("图片列表获取成功");
+        return rtv;
+    }
+
+    @RequestMapping(value = "/addImage", method = RequestMethod.POST)
+    @ResponseBody
+    public ReturnValue addImage(@RequestBody Image image) {
+        ReturnValue rtv = new ReturnValue();
+        int result = blogService.addImage(image);
+        if(result==1){
+            rtv.setSuccess(true);
+            rtv.setMsg("图片新增成功");
+        } else {
+            rtv.setMsg("图片新增失败");
+        }
+        return rtv;
+    }
+
+    @RequestMapping(value = "/deleteImage", method = RequestMethod.GET)
+    @ResponseBody
+    public ReturnValue deleteImage(Integer imageId) {
+        ReturnValue rtv = new ReturnValue();
+        int result = blogService.deleteImage(imageId);
+        if(result==1){
+            rtv.setSuccess(true);
+            rtv.setMsg("图片删除成功");
+        } else {
+            rtv.setMsg("图片删除失败");
+        }
+        return rtv;
+    }
+
+    @RequestMapping(value = "/updateImage", method = RequestMethod.POST)
+    @ResponseBody
+    public ReturnValue updateImage(@RequestBody Image image) {
+        ReturnValue rtv = new ReturnValue();
+        int result = blogService.updateImage(image);
+        if(result==1){
+            rtv.setSuccess(true);
+            rtv.setMsg("图片更新成功");
+        } else {
+            rtv.setMsg("图片更新失败");
+        }
+        return rtv;
+    }
+
+
 
     @RequestMapping("selectFlagList")
     @ResponseBody

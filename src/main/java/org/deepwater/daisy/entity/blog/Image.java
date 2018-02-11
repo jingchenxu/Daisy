@@ -23,6 +23,26 @@ public class Image {
 
     private String imageType;
 
+    public int getPageNo() {
+        return pageNo;
+    }
+
+    public void setPageNo(int pageNo) {
+        this.pageNo = pageNo;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    private int pageNo;
+
+    private int pageSize;
+
     public Integer getImageId() {
         return imageId;
     }
@@ -116,6 +136,8 @@ public class Image {
                 ", imageCreatetime=" + imageCreatetime +
                 ", imageCreator='" + imageCreator + '\'' +
                 ", imageType='" + imageType + '\'' +
+                ", pageNo=" + pageNo +
+                ", pageSize=" + pageSize +
                 '}';
     }
 }

@@ -1,5 +1,6 @@
 package org.deepwater.daisy.mapper.blog;
 
+import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
 import org.deepwater.daisy.entity.blog.Image;
@@ -27,7 +28,7 @@ public interface ImageMapper {
         "values (#{imageId,jdbcType=INTEGER}, #{imageNumber,jdbcType=VARCHAR}, ",
         "#{imageName,jdbcType=VARCHAR}, #{imageUrl,jdbcType=VARCHAR}, ",
         "#{imageIsIndex,jdbcType=BIT}, #{imageDescription,jdbcType=VARCHAR}, ",
-        "#{imageIsRemote,jdbcType=BIT}, #{imageCreatetime,jdbcType=DATE}, ",
+        "#{imageIsRemote,jdbcType=BIT}, #{imageCreatetime,jdbcType=TIMESTAMP}, ",
         "#{imageCreator,jdbcType=VARCHAR}, #{imageType,jdbcType=VARCHAR})"
     })
     int insert(Image record);
@@ -50,11 +51,43 @@ public interface ImageMapper {
         @Result(column="image_is_index", property="imageIsIndex", jdbcType=JdbcType.BIT),
         @Result(column="image_description", property="imageDescription", jdbcType=JdbcType.VARCHAR),
         @Result(column="image_is_remote", property="imageIsRemote", jdbcType=JdbcType.BIT),
-        @Result(column="image_createtime", property="imageCreatetime", jdbcType=JdbcType.DATE),
+        @Result(column="image_createtime", property="imageCreatetime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="image_creator", property="imageCreator", jdbcType=JdbcType.VARCHAR),
         @Result(column="image_type", property="imageType", jdbcType=JdbcType.VARCHAR)
     })
     Image selectByPrimaryKey(Integer imageId);
+
+    @Select({
+            "<script>",
+            "select",
+            "image_id, image_number, image_name, image_url, image_is_index, image_description, ",
+            "image_is_remote, image_createtime, image_creator, image_type",
+            "from T_DAISY_IMAGE",
+            "<if test='imageNumber != null'>",
+            "AND image_number LIKE '%${imageNumber}%'",
+            "</if>",
+            "<if test='imageName != null'>",
+            "AND image_name LIKE '%${imageName}%'",
+            "</if>",
+            "<if test='imageCreator != null'>",
+            "AND image_creator LIKE '%${imageCreator}%'",
+            "</if>",
+            "ORDER BY image_createtime DESC",
+            "</script>"
+    })
+    @Results({
+            @Result(column="image_id", property="imageId", jdbcType=JdbcType.INTEGER, id=true),
+            @Result(column="image_number", property="imageNumber", jdbcType=JdbcType.VARCHAR),
+            @Result(column="image_name", property="imageName", jdbcType=JdbcType.VARCHAR),
+            @Result(column="image_url", property="imageUrl", jdbcType=JdbcType.VARCHAR),
+            @Result(column="image_is_index", property="imageIsIndex", jdbcType=JdbcType.BIT),
+            @Result(column="image_description", property="imageDescription", jdbcType=JdbcType.VARCHAR),
+            @Result(column="image_is_remote", property="imageIsRemote", jdbcType=JdbcType.BIT),
+            @Result(column="image_createtime", property="imageCreatetime", jdbcType=JdbcType.TIMESTAMP),
+            @Result(column="image_creator", property="imageCreator", jdbcType=JdbcType.VARCHAR),
+            @Result(column="image_type", property="imageType", jdbcType=JdbcType.VARCHAR)
+    })
+    Page<Image> getImageListByPage(Image image);
 
     @Select({
             "select",
@@ -71,7 +104,7 @@ public interface ImageMapper {
             @Result(column="image_is_index", property="imageIsIndex", jdbcType=JdbcType.BIT),
             @Result(column="image_description", property="imageDescription", jdbcType=JdbcType.VARCHAR),
             @Result(column="image_is_remote", property="imageIsRemote", jdbcType=JdbcType.BIT),
-            @Result(column="image_createtime", property="imageCreatetime", jdbcType=JdbcType.DATE),
+            @Result(column="image_createtime", property="imageCreatetime", jdbcType=JdbcType.TIMESTAMP),
             @Result(column="image_creator", property="imageCreator", jdbcType=JdbcType.VARCHAR),
             @Result(column="image_type", property="imageType", jdbcType=JdbcType.VARCHAR)
     })
@@ -88,7 +121,7 @@ public interface ImageMapper {
           "image_is_index = #{imageIsIndex,jdbcType=BIT},",
           "image_description = #{imageDescription,jdbcType=VARCHAR},",
           "image_is_remote = #{imageIsRemote,jdbcType=BIT},",
-          "image_createtime = #{imageCreatetime,jdbcType=DATE},",
+          "image_createtime = #{imageCreatetime,jdbcType=TIMESTAMP},",
           "image_creator = #{imageCreator,jdbcType=VARCHAR},",
           "image_type = #{imageType,jdbcType=VARCHAR}",
         "where image_id = #{imageId,jdbcType=INTEGER}"

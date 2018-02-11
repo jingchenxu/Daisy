@@ -49,7 +49,7 @@ public class ImageSqlProvider {
         }
         
         if (record.getImageCreatetime() != null) {
-            sql.VALUES("image_createtime", "#{imageCreatetime,jdbcType=DATE}");
+            sql.VALUES("image_createtime", "#{imageCreatetime,jdbcType=TIMESTAMP}");
         }
         
         if (record.getImageCreator() != null) {
@@ -92,7 +92,7 @@ public class ImageSqlProvider {
         }
         
         if (record.getImageCreatetime() != null) {
-            sql.SET("image_createtime = #{imageCreatetime,jdbcType=DATE}");
+            sql.SET("image_createtime = #{imageCreatetime,jdbcType=TIMESTAMP}");
         }
         
         if (record.getImageCreator() != null) {

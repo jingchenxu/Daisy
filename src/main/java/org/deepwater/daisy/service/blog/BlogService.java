@@ -16,9 +16,17 @@ public interface BlogService {
 
     Page<Blog> getBlogListByPage(Blog blog);
 
+    Page<Image> getImageListByPage(Image image);
+
     List<Flag> selectFlagList();
 
     public int saveBlog(Flag flag);
 
     List<Image> getIndexImage();
+
+    int deleteImage(Integer imageId);
+
+    int addImage(Image image);
+
+    int updateImage(Image image);
 }
