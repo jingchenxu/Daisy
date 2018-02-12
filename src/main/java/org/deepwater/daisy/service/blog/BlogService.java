@@ -29,4 +29,54 @@ public interface BlogService {
     int addImage(Image image);
 
     int updateImage(Image image);
+
+    /**
+     * AND 语句查询
+     *
+     * @param blogContent
+     * @param blogTitle
+     * @return
+     */
+    List<Blog> findByDescriptionAndScore(String blogContent, String blogTitle);
+
+    /**
+     * OR 语句查询
+     *
+     * @param blogContent
+     * @param blogTitle
+     * @return
+     */
+    List<Blog> findByDescriptionOrScore(String blogContent, String blogTitle);
+
+    /**
+     * 查询城市描述
+     *
+     * @param blogContent
+     * @return
+     */
+    List<Blog> findByDescription(String blogContent);
+
+    /**
+     * NOT 语句查询
+     *
+     * @param blogContent
+     * @return
+     */
+    List<Blog> findByDescriptionNot(String blogContent);
+
+    /**
+     * LIKE 语句查询
+     *
+     * @param blogContent
+     * @return
+     */
+    List<Blog> findByDescriptionLike(String blogContent);
+
+    /**
+     * 新增博客信息
+     *
+     * @param blog
+     * @return
+     */
+    Integer addBlog(Blog blog);
 }

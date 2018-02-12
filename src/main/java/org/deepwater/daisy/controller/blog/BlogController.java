@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 public class BlogController {
@@ -140,6 +141,30 @@ public class BlogController {
             rtv.setMsg("标签保存失败");
         }
         return rtv;
+    }
+
+    /**
+     * AND 语句查询
+     *
+     * @param blogContent
+     * @param blogTitle
+     * @return
+     */
+    @RequestMapping(value = "/api/city/and/find", method = RequestMethod.GET)
+    public List<Blog> findByDescriptionAndScore(@RequestParam(value = "blogContent") String blogContent,
+                                                @RequestParam(value = "blogTitle") String blogTitle) {
+        return blogService.findByDescriptionAndScore(blogContent, blogTitle);
+    }
+
+    /**
+     * LIKE 语句查询
+     *
+     * @param blogContent
+     * @return
+     */
+    @RequestMapping(value = "/api/city/like/find", method = RequestMethod.GET)
+    public List<Blog> findByDescriptionLike(@RequestParam(value = "blogContent") String blogContent) {
+        return blogService.findByDescriptionLike(blogContent);
     }
 
 }

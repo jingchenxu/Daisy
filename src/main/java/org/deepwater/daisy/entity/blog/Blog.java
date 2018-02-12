@@ -1,10 +1,18 @@
 package org.deepwater.daisy.entity.blog;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.Document;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+@Document(indexName = "blogid", type = "blog", shards = 1, replicas = 0)
 public class Blog implements Serializable {
+
+    private static final long serialVersionUID = -1L;
+
+    @Id
     private Integer blogId;
 
     private String blogTitle;

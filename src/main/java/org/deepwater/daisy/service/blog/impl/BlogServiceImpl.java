@@ -12,8 +12,11 @@ import org.deepwater.daisy.mapper.blog.BlogFlagMapper;
 import org.deepwater.daisy.mapper.blog.BlogMapper;
 import org.deepwater.daisy.mapper.blog.ImageMapper;
 import org.deepwater.daisy.mapper.flag.FlagMapper;
+import org.deepwater.daisy.repository.BlogRepository;
 import org.deepwater.daisy.service.blog.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,6 +25,10 @@ import java.util.List;
 
 @Service
 public class BlogServiceImpl implements BlogService {
+
+    private static final Integer pageNumber = 0;
+    private static final Integer pageSize = 10;
+    Pageable pageable = new PageRequest(pageNumber, pageSize);
 
     @Autowired
     private BlogMapper blogMapper;
@@ -35,6 +42,9 @@ public class BlogServiceImpl implements BlogService {
     @Autowired
     private ImageMapper imageMapper;
 
+    @Autowired
+    BlogRepository blogRepository;
+
     @Override
     public ReturnValue saveBlog(Blog blog) {
         ReturnValue rtv = new ReturnValue();
@@ -45,6 +55,9 @@ public class BlogServiceImpl implements BlogService {
             blog.setBlogNumber(blogNumber);
             blog.setBlogPublishtime(new Date());
             int saveBlog = blogMapper.insert(blog);
+            // 返回博客保存信息 病保存到ES当中
+            Blog temp1 = blogMapper.selectByBlogNumber(blogNumber);
+            addBlog(temp1);
             // 保存tag中间表
             List<String> tags = blog.getTags();
             List<BlogFlag> blogFlags = new ArrayList<>();
@@ -121,5 +134,32 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public int updateImage(Image image) {
         return imageMapper.updateByPrimaryKey(image);
+    }
+
+    public List<Blog> findByDescriptionAndScore(String blogContent, String blogTitle) {
+        return blogRepository.findByBlogContentAndBlogTitle(blogContent, blogTitle);
+    }
+
+    public List<Blog> findByDescriptionOrScore(String blogContent, String blogTitle) {
+        return blogRepository.findByBlogContentOrBlogTitle(blogContent, blogTitle);
+    }
+
+    public List<Blog> findByDescription(String blogContent) {
+        return blogRepository.findByBlogContent(blogContent, pageable).getContent();
+    }
+
+    public List<Blog> findByDescriptionNot(String blogContent) {
+        return blogRepository.findByBlogContentNot(blogContent, pageable).getContent();
+    }
+
+    public List<Blog> findByDescriptionLike(String blogContent) {
+        System.out.println("=========="+blogContent);
+        return blogRepository.findByBlogContentLike(blogContent, pageable).getContent();
+    }
+
+    @Override
+    public Integer addBlog(Blog blog) {
+        Blog blog1 = blogRepository.save(blog);
+        return blog1.getBlogId();
     }
 }
